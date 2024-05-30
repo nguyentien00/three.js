@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <textarea id="codeEditor" class="editor" spellcheck="false" autocorrect="off" autocapitalize="off" translate="no" oninput="render()"></textarea>
+  <pre id="error"></pre>
+  <div id="indicator"></div>
+  <div id="controls">
+    <div class="controls">
+      <input id="btnToggleView" class="icon" type="checkbox" name="toggleView" onclick="toggleView()">
+      <input id="btnToggleResolution" class="icon" type="checkbox" name="toggleResolution" onchange="toggleResolution()">
+      <input id="btnReset" class="icon" type="checkbox" name="reset" onclick="reset()">
+    </div>
+  </div>
+  <script type="x-shader/x-fragment">
+    #version 300 es
+  /*********
+  * made by Matthias Hurrle (@atzedent)
+  */ 
+  precision highp float;
+  out vec4 O;
+  uniform float time;
+  uniform vec2 resolution;
+  uniform vec2 touch;
+  uniform int pointerCount;
+  #define mouse (touch/R)
+  #define P pointerCount
+  #define FC gl_FragCoord.xy
+  #define R resolution
+  #define T time
+  #define S smoothstep
+  #define N normalize
+  #define rot(a) mat2(cos(a-vec4(0,11,33,0)))
+  float smin(float a, float b, float k) {
+    float h=clamp(.5+.5*(b-a)/k,.0,1.);
+    return mix(b,a,h)-k*h*(1.-h);
+  }
+  vec2 map(vec3 p) {
+    p.y+=.25;
+    float
+    bwl=smin(abs(length(p)-1.)-.1, (p.y-.25), -.025),
+    bl0=length(p-vec3(0,.5,0))-.5,
+    bl1=length(p-vec3(sin(T),1.5,0))-.25,
+    bl2=length(p-vec3(0,2.125,cos(T)*.5))-.125;
+    vec2
+    a=vec2(bwl,0),
+    b=vec2(bl0,1),
+    c=vec2(bl1,2),
+    d=vec2(bl2,3);
+    a=a.x<b.x?a:b;
+    a=a.x<c.x?a:c;
+    a=a.x<d.x?a:d;
+    return a;
+  }
+  vec3 norm(vec3 p) {
+    float h=1e-3; vec2 k=vec2(-1,1);
+    return N(
+      k.xyy*map(p+k.xyy*h).x+
+      k.yxy*map(p+k.yxy*h).x+
+      k.yyx*map(p+k.yyx*h).x+
+      k.xxx*map(p+k.xxx*h).x
+    );
+  }
+  float rnd(vec2 p) { return fract(sin(dot(p,vec2(12.9898,78.233)))*345678.); }
+  float noise(vec2 p) {
+    vec2 f=fract(p), i=floor(p), u=S(.0,1.,f);
+    float
+    a=rnd(i),
+    b=rnd(i+vec2(1,0)),
+    c=rnd(i+vec2(0,1)),
+    d=rnd(i+1.);
+    return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+  }
+  float fbm(vec2 p) {
+    float t=.0, a=.5;
+    for (int i=0; i<5; i++) {
+      t+=a*noise(p);
+      p*=2.;
+      a*=.5;
+    }
+    return t;
+  }
+  float pattern(vec2 p) {
+    float d=1.;
+    p.y+=.085;
+    for (float i=.0; i<3.; i++) {
+      float
+      a=fbm(p*d),
+      b=fbm((p*mat2(1.6,-1.2,1.2,-1.6))*8.*d);
+      d=a+b-a*b;
+      p*=2.;
+    }
+    return tanh(d*d);
+  }
+  float calcAO(vec3 p, vec3 n) {
+    float occ=.0, sca=1.;
+    for (float i=.0; i<5.; i++) {
+      float
+      h=.01+i*.04,
+      d=map(p+h*n).x;
+      occ+=(h-d)*sca;
+      sca*=.55;
+      if (occ>.35) break;
+    }
+    return clamp(1.-3.*occ,.0,1.)*(.5+.5*n.y);
+  }
+  float shadow(vec3 ro,vec3 rd,float mind,float maxd) {
+    float shd = 1.;
+    for (int i=0; i<24; i++) {
+      float
+      d = map(ro+rd*mind).x;
+  
+      shd = min(shd,clamp(12.*d/mind,.0,1.));
+      mind += clamp(d,.01,.2);
+  
+      if (abs(shd)<1e-3 || mind>maxd) break;
+    }
+    return S(.0,1.,shd);
+  }
+  void cam(inout vec3 p) {
+    if (P>0) {
+      p.yz*=rot(-mouse.y*6.3+3.14);
+      p.xz*=rot(3.14-mouse.x*6.3);
+    } else {
+      float t=T*.2;
+      t+=sin(t)*.5+.5;
+      p.yz*=rot(exp((cos(t)*.5-.75)-.5));
+      p.xz*=rot((sin(t)*.5+.5)*.2+t);
+    }
+  }
+  void main() {
+    vec2 uv=(FC-.5*R)/min(R.x,R.y);
+    float t=T*.2;
+    t+=sin(t)*.5+.5;
+    vec3 col=vec3(0),
+    p=vec3(0,0,exp(-cos(t))*1.5-9.),
+    rd=N(vec3(uv,1.9));
+    cam(p); cam(rd);
+    const float steps=400., maxd=12.;
+    for (float i=.0; i<steps; i++) {
+      vec2 d=map(p);
+      if (abs(d.x)<1e-3) {
+        vec3 n=norm(p),
+        r=reflect(rd,n),
+        l=N(vec3(0,10,0));
+        float
+        diff=clamp(dot(l,n)*.5+.5,.0,1.), fres=pow(S(1.,.0,dot(rd,n)),2.), spec=pow(r.y*.5+.5,7.);
+        col+=diff*fres*calcAO(p,n)+spec;
+        col=1.5*mix(.55*col,col,clamp(shadow(p+n*5e-2,l,5e-3,2.5),.0,1.));
+        col*=mix(vec3(.9,.5,.3),vec3(.9,.4,.1),n.y*.5+.5);
+        vec3 q=p;
+        if (d.y == 2.) q.x-=sin(T);
+        else if (d.y == 3.) { q.z-=cos(T)*.5; q*=.8; } 
+        q.xz*=rot(1.5707*d.y);
+        q.y-=clamp(round(q.y/.5),-2.,2.)*.5;
+        q.yz=round(q.yz*.8);
+        q.xz*=.15;
+        n=norm(q);
+        col=mix(col,vec3(1)*max(max(
+          pattern(q.xy)*abs(n.z),
+          pattern(q.yz)*abs(n.x)),
+          pattern(q.xz)*abs(n.y)
+        ),.5);
+        col=tanh(col*col*col*col);
+        break;
+      }
+      if (d.x>maxd) break;
+      p+=rd*d.x;
+    }
+    col=pow(col,vec3(.4545));
+    O=vec4(col,1);
+  }</script>
+</body>
+<script src="script.js">
+</script>
+</html>

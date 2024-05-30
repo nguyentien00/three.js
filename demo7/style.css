@@ -1,0 +1,44 @@
+body {
+    height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    background: black;
+    color: white;
+    overflow: hidden;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .item {
+    position: absolute;
+    width: calc(var(--i) * 2.5vmin);
+    border: .9vmin solid #00c8ff;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: transparent;
+    transform: rotateX(70deg) translateZ(50px);
+    box-shadow:
+      0px 0px 15px #7c7c7c,
+      inset 0px 0px 15px #7c7c7c;
+    transform-style: preserve-3d;
+    animation: anim 3s ease-in-out calc(var(--i) * 0.08s) infinite;
+  }
+  
+  @keyframes anim {
+  
+    0%,
+    100% {
+      transform: rotateX(70deg) translateZ(50px) translateY(0px);
+      filter: hue-rotate(0deg);
+    }
+  
+    50% {
+      transform: rotateX(70deg) translateZ(50px) translateY(-50vmin);
+      filter: hue-rotate(180deg);
+    }
+  }

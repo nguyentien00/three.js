@@ -1,0 +1,670 @@
+/* author: smpnjn */
+body {
+    background: rgb(15 19 22);
+    font-family: "Silkscreen", cursive;
+    overflow: hidden;
+}
+h1 {
+    color: white;
+    font-size: 4rem;
+    position: absolute;
+    transition: all 0.1s ease-out;
+    top: -12rem;
+    left: -10rem;
+}
+
+#hat:checked ~ #chicken h1 {
+    top: -18rem;
+}
+#controls {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 99999;
+}
+#rotate-label,
+#hat-label,
+#link {
+    background: #3c874c;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    display: block;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 0 #204c2d, 0 -4px #64ca55, 4px 0 #316c42, -4px 0 #316c42, 0 -7px black, 0 7px black, 7px 0 black,
+        -7px 0 black, -7px 3px black, -7px -3px black, 7px 3px black, 7px -3px black, -3px 7px black, 3px 7px black,
+        -3px -7px black, 3px -7px black;
+    transform: scale(1);
+    cursor: pointer;
+}
+
+.c14,
+.c15,
+.c16 {
+    display: none;
+}
+#hat:checked ~ #chicken .c14,
+#hat:checked ~ #chicken .c15,
+#hat:checked ~ #chicken .c16 {
+    display: block;
+}
+
+#rotate-label:hover,
+#hat-label:hover,
+#link:hover {
+    background: #439356;
+}
+#rotate-label:active,
+#hat-label:active,
+#link:active {
+    background: #439356;
+    box-shadow: 0 4px 0 #204c2d, 0 -4px #64ca55, 4px 0 #316c42, -4px 0 #316c42, 0 -7px white, 0 7px white, 7px 0 white,
+        -7px 0 white, -7px 3px white, -7px -3px white, 7px 3px white, 7px -3px white, -3px 7px white, 3px 7px white,
+        -3px -7px white, 3px -7px white;
+    transform: scale(1.05);
+}
+input[type="checkbox"] {
+    display: none;
+}
+h1:before {
+    content: "CHICKEN";
+    position: absolute;
+    font-size: 5rem;
+    left: -2rem;
+    top: -0.75rem;
+    opacity: 0.05;
+}
+h1:after {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f0d7";
+    font-weight: 900;
+    color: #ecb729;
+    position: absolute;
+    top: 4rem;
+    left: calc(50% - 0.5rem);
+}
+#chicken {
+    transform: rotateX(-15deg) rotateY(20deg);
+    transform-style: preserve-3d;
+    position: relative;
+    left: 16rem;
+    top: 16rem;
+    transform-origin: 6rem 6rem;
+    transform-style: preserve-3d;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
+}
+
+#chicken:hover > h1 {
+    transform: scale(1.1);
+}
+
+#chicken > div {
+    height: 6rem;
+    width: 6rem;
+    position: relative;
+    transform-style: preserve-3d;
+}
+#poke-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    cursor: pointer;
+}
+#shadow {
+    background: radial-gradient(circle, rgb(37 45 51) 0%, rgba(9, 9, 121, 0) 70%);
+    width: 30rem;
+    height: 30rem;
+    position: absolute;
+    top: 24rem;
+    left: 4rem;
+    transform-style: preserve-3d;
+    perspective: 500px;
+    transform: rotateX(70deg);
+    z-index: -1;
+    filter: color-burn;
+}
+#chicken .c1 {
+    position: absolute;
+    top: 18rem;
+}
+
+#chicken .c2 {
+    position: absolute;
+    top: 6rem;
+}
+
+#chicken .c3 {
+    position: absolute;
+    transform: translateZ(2rem) translateY(2rem);
+}
+
+#chicken .c4 {
+    position: absolute;
+    top: 5rem;
+    transform: translateZ(6rem);
+}
+
+#chicken .c5 {
+    position: absolute;
+    top: 8.2rem;
+    transform: translateZ(4.5rem);
+}
+#chicken .c6 {
+    position: absolute;
+    top: 3.8rem;
+    transform: translateZ(2.05rem);
+}
+#chicken .c7 {
+    position: absolute;
+    top: 3.8rem;
+    left: 5rem;
+    transform: translateZ(2.05rem);
+}
+#chicken .c8 {
+    position: absolute;
+    top: 16rem;
+    left: 5rem;
+    transform: translateZ(-4rem);
+}
+#chicken .c9 {
+    position: absolute;
+    top: 16rem;
+    left: 0rem;
+    transform: translateZ(-4rem);
+}
+#chicken .c10 {
+    position: absolute;
+    top: 22rem;
+    left: -1rem;
+    transform: translateZ(-2rem);
+}
+#chicken .c11 {
+    position: absolute;
+    top: 22rem;
+    left: 4rem;
+    transform: translateZ(-2rem);
+}
+#chicken .c12 {
+    position: absolute;
+    top: 6rem;
+    left: calc(-3rem - 3px);
+}
+#chicken .c13 {
+    position: absolute;
+    top: 6rem;
+    left: calc(8rem + 3px);
+}
+
+#chicken .c14 {
+    transform: translateZ(4rem) translateY(0rem);
+}
+#chicken .c15 {
+    transform: translateZ(3rem) translateY(-8rem);
+}
+#chicken .c16 {
+    transform: translateZ(3rem) translateY(-18rem);
+}
+.cube {
+    position: relative;
+    height: 6em;
+    width: 6em;
+    transform-style: preserve-3d;
+}
+
+.cube > div,
+.cube:after,
+.cube:before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    background: white;
+}
+
+.cube.beak > div,
+.cube.beak:after,
+.cube.beak:before,
+.cube.leg > div,
+.cube.leg:after,
+.cube.leg:before,
+.cube.foot > div,
+.cube.foot:after,
+.cube.foot:before {
+    background: #d8a51c;
+}
+
+.cube.hat-banner > div,
+.cube.hat-banner:after,
+.cube.hat-banner:before {
+    background: #e63131;
+}
+.cube.hat-banner .left {
+    background: #bf2f2f;
+}
+.cube.hat-rim > div,
+.cube.hat-rim:after,
+.cube.hat-rim:before,
+.cube.hat-top > div,
+.cube.hat-top:after,
+.cube.hat-top:before {
+    background: #060607;
+}
+.cube.hat-rim .left,
+.cube.hat-top .left {
+    background: black;
+}
+.cube.beak:before {
+    background: #ecb729;
+}
+.cube.beak .left,
+.cube.foot .left,
+.cube.leg .left {
+    background: #b68c1a;
+}
+.cube.foot:before {
+    background: #aa8522;
+}
+.cube.comb > div,
+.cube.comb:after,
+.cube.comb:before {
+    background: #de2c42;
+}
+.cube.comb .left {
+    background: #a1192a;
+}
+.cube.eye > div,
+.cube.eye:after,
+.cube.eye:before {
+    background: black;
+}
+
+.cube:before {
+    transform: rotateX(-90deg);
+    transform-origin: 0 0;
+}
+
+.cube:after {
+    transform: translateZ(-6rem);
+    transform-origin: 0 50%;
+}
+
+.cube .left {
+    transform: rotateY(90deg);
+    transform-origin: 0 0;
+    background: #ddd;
+}
+
+.cube .right {
+    transform-origin: 100% 0;
+    background: #ddd;
+    transform: rotateY(-90deg);
+}
+
+.cube .bottom {
+    transform: rotateX(90deg);
+    transform-origin: 100% 100%;
+}
+
+.cube.body {
+    width: 10rem;
+    height: 10rem;
+    left: -2rem;
+}
+.cube.head {
+    width: 6rem;
+    height: 8rem;
+}
+.cube.beak {
+    width: 5.8rem;
+    left: 0.1rem;
+    height: 1.5rem;
+}
+.cube.beak.bottom-beak {
+    top: 1.52rem;
+}
+.cube.comb {
+    width: 2rem;
+    left: 2rem;
+    height: 2rem;
+}
+.cube.eye {
+    width: 1rem;
+    height: 1rem;
+}
+.cube.leg {
+    width: 1rem;
+    height: 6rem;
+}
+.cube.wing {
+    width: 1rem;
+    height: 8rem;
+}
+.cube.foot {
+    width: 3rem;
+    height: 1rem;
+}
+
+.cube.head:before {
+    height: 6rem;
+}
+.cube.wing .left,
+.cube.wing .right {
+    height: 8rem;
+    width: 10rem;
+}
+.cube.wing .right {
+    transform-origin: 1rem 0;
+    transform: rotateY(90deg) translateX(1rem);
+}
+.cube.hat-rim {
+    height: 2rem;
+    width: 10rem;
+    left: -2rem;
+}
+.cube.hat-banner {
+    height: 2rem;
+    width: 8rem;
+    left: -1rem;
+}
+
+.cube.hat-top {
+    height: 4rem;
+    width: 8rem;
+    left: -1rem;
+}
+.cube.hat-top:before {
+    height: 8rem;
+    width: 8rem;
+}
+.cube.wing:before {
+    height: 10rem;
+    width: 1rem;
+}
+.cube.hat-rim:before,
+.cube.hat-rim .bottom {
+    height: 10rem;
+    width: 10rem;
+}
+.cube.hat-banner:before,
+.cube.hat-banner .bottom {
+    height: 8rem;
+    width: 8rem;
+}
+.cube.hat-rim .bottom {
+    transform: translateY(-9rem) rotatex(90deg);
+}
+.cube.hat-banner .bottom {
+    transform: translateY(-8rem) rotatex(90deg);
+}
+.cube.wing .bottom {
+    height: 10rem;
+    width: 1rem;
+    transform-origin: 0rem 8rem;
+    transform: rotateX(90deg) translateY(-2rem);
+}
+.cube.leg:before,
+.cube.leg .bottom {
+    display: none;
+}
+.cube.beak:before {
+    height: 6rem;
+}
+.cube.foot:before {
+    height: 3rem;
+}
+.cube.foot:after {
+    transform: translateZ(-3rem);
+}
+.cube.leg:after {
+    transform: translateZ(-1rem);
+}
+.cube.leg:after {
+    transform: translateZ(-1rem);
+}
+.cube.eye:after {
+    transform: translateZ(-1rem);
+}
+.cube.body:after,
+.cube.wing:after {
+    transform: translateZ(-10rem);
+}
+.cube.hat-rim:after {
+    transform: translateZ(-10rem);
+}
+.cube.hat-banner:after {
+    transform: translateZ(-8rem);
+}
+.cube.hat-top:after {
+    transform: translateZ(-8rem);
+}
+
+.flutter {
+    animation: flutter 2s infinite;
+    transform-origin: 0 0;
+}
+.anti-flutter {
+    animation: anti-flutter 2s infinite;
+    transform-origin: 1rem 0;
+}
+
+#rotate:checked ~ #chicken {
+    animation: rotate 2s 1 forwards;
+}
+#rotate ~ #chicken {
+    animation: anti-rotate 2s 1 forwards;
+}
+
+#poke:checked ~ #chicken .quack {
+    animation: quack 0.4s 1 forwards;
+}
+#poke:checked ~ #chicken .quack-anti {
+    animation: quack-anti 0.4s 1 forwards;
+}
+
+#poke ~ #chicken .quack {
+    animation: quack-clone 0.4s 1 forwards;
+}
+#poke ~ #chicken .quack-anti {
+    animation: quack-anti-clone 0.4s 1 forwards;
+}
+
+@keyframes flutter {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    15% {
+        transform: rotateZ(-35deg);
+    }
+    30% {
+        transform: rotateZ(-15deg);
+    }
+    45% {
+        transform: rotateZ(-70deg);
+    }
+    60% {
+        transform: rotateZ(0deg);
+    }
+}
+@keyframes aggressively-flutter {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    15% {
+        transform: rotateZ(-90deg);
+    }
+    30% {
+        transform: rotateZ(-45deg);
+    }
+    45% {
+        transform: rotateZ(-90deg);
+    }
+    60% {
+        transform: rotateZ(-45deg);
+    }
+    75% {
+        transform: rotateZ(-90deg);
+    }
+    90% {
+        transform: rotateZ(-45deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+
+@keyframes aggressively-flutter-anti {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    15% {
+        transform: rotateZ(90deg);
+    }
+    30% {
+        transform: rotateZ(45deg);
+    }
+    45% {
+        transform: rotateZ(90deg);
+    }
+    60% {
+        transform: rotateZ(45deg);
+    }
+    75% {
+        transform: rotateZ(90deg);
+    }
+    90% {
+        transform: rotateZ(45deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+@keyframes anti-flutter {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    15% {
+        transform: rotateZ(35deg);
+    }
+    30% {
+        transform: rotateZ(15deg);
+    }
+    45% {
+        transform: rotateZ(70deg);
+    }
+    60% {
+        transform: rotateZ(0deg);
+    }
+}
+@keyframes rotate {
+    0% {
+        transform: rotateX(-15deg) rotateY(20deg);
+    }
+    100% {
+        transform: rotateX(-15deg) rotateY(380deg);
+    }
+}
+@keyframes anti-rotate {
+    0% {
+        transform: rotateX(-15deg) rotateY(380deg);
+    }
+    100% {
+        transform: rotateX(-15deg) rotateY(20deg);
+    }
+}
+@keyframes quack {
+    0% {
+        transform: rotateX(0deg) translateZ(6rem);
+    }
+    50% {
+        transform: rotateX(5deg) translateZ(7rem);
+    }
+    100% {
+        transform: rotateX(0) translateZ(6rem);
+    }
+}
+@keyframes quack-anti {
+    0% {
+        transform: rotateX(0deg) translateZ(6rem);
+    }
+    50% {
+        transform: rotateX(-5deg) translateZ(7rem);
+    }
+    100% {
+        transform: rotateX(0) translateZ(6rem);
+    }
+}
+@keyframes quack-clone {
+    0% {
+        transform: rotateX(0deg) translateZ(6rem);
+    }
+    50% {
+        transform: rotateX(5deg) translateZ(7rem);
+    }
+    100% {
+        transform: rotateX(0) translateZ(6rem);
+    }
+}
+@keyframes quack-anti-clone {
+    0% {
+        transform: rotateX(0deg) translateZ(6rem);
+    }
+    50% {
+        transform: rotateX(-5deg) translateZ(7rem);
+    }
+    100% {
+        transform: rotateX(0) translateZ(6rem);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    @keyframes rotate {
+        0% {
+            transform: rotateX(-15deg) rotateY(20deg);
+        }
+        100% {
+            transform: rotateX(-15deg) rotateY(20deg);
+        }
+    }
+    @keyframes anti-rotate {
+        0% {
+            transform: rotateX(-15deg) rotateY(20deg);
+        }
+        100% {
+            transform: rotateX(-15deg) rotateY(20deg);
+        }
+    }
+    #rotate-label {
+        display: none;
+    }
+
+    #poke ~ #chicken .quack {
+        animation: none;
+    }
+    #poke ~ #chicken .quack-anti {
+        animation: none;
+    }
+
+    @keyframes quack {
+        0% {
+            transform: rotateX(0deg) translateZ(6rem);
+        }
+        100% {
+            transform: rotateX(0) translateZ(6rem);
+        }
+    }
+    @keyframes quack-anti {
+        0% {
+            transform: rotateX(0deg) translateZ(6rem);
+        }
+        100% {
+            transform: rotateX(0) translateZ(6rem);
+        }
+    }
+}

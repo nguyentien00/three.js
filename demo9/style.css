@@ -1,0 +1,58 @@
+/* author: Mark Mankarious
+https://codepen.io/markmanx01/pen/yJJxRj */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    cursor: none;
+}
+
+#bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #6eccdf;
+}
+
+#intro {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/356608/pencil-intro.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#pencil3D {
+    pointer-events: none;
+}
+
+#sketchpad {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    background-color: #fafafa;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 3px 12px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 3px 12px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 3px 12px -2px rgba(0, 0, 0, 0.75);
+}
